@@ -1,9 +1,9 @@
 
 public class GameObject {
    ArrayList<tag> tags;
-   Scene ptr;
-  public GameObject(Scene ptr){
-    this.ptr = ptr;
+   Scene sc;
+  public GameObject(Scene sc){
+    this.sc = sc;
     tags = new ArrayList<tag>();
     tags.add(tag.DEFAULT);
   }

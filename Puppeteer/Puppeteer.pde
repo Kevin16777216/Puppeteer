@@ -1,10 +1,11 @@
-GameHandler handle = new GameHandler();
+GameHandler handle;
 KeyListener keys = new KeyListener();
 double previous = millis();
 double lag = 0.0;
 
 void setup() {
   size(1920,1080);
+  handle = new GameHandler();
 }
 
 void draw() {

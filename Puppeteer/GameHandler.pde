@@ -13,7 +13,7 @@ public class GameHandler {
   private Scene getScene(int id) {
     switch (id) {
       case 0:
-        return new DemoScene();
+        return new Level_Loader("1",readMode.IMG);
       case 5:
         return new DemoScene();
     }

@@ -6,3 +6,6 @@ public static enum tag{
   SOLID,
   DEFAULT
 }
+public static enum readMode{
+  STRING,IMG
+}
