@@ -12,6 +12,7 @@ void draw() {
   clear();
   background(255);
   handle.update();
+  handle.render();
 }
 
 public void keyPressed() {

@@ -13,11 +13,11 @@ public class GameHandler {
   private Scene getScene(int id) {
     switch (id) {
       case 0:
-        return new Scene();
-      case 2:
-        return new Scene();
+        return new DemoScene();
+      case 5:
+        return new DemoScene();
     }
-    return new Scene();
+    return new DemoScene();
   }
   private void loadScene(int id) {
     cScene = getScene(id);

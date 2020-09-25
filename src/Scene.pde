@@ -1,11 +1,6 @@
 import java.util.HashSet;
-public static enum tag{
-  UI,
-  PLAYER,
-  ENEMY,
-  DEFAULT
-}
-public class Scene {
+
+abstract class Scene {
   //Map type to GameObject Indexes. Allows for O(1) Search by Tag, Addition, Removal
   HashMap<tag,HashSet<GameObject>> objectMap;
   HashSet<GameObject> objects;
@@ -31,20 +26,39 @@ public class Scene {
     while (!tbd.isEmpty()) {
       GameObject tmp = tbd.remove();
       objects.remove(tmp);
-      tag[] types = tmp.getTags();
-      for(tag i: types)objectMap.get(i).remove(tmp);
+      //ArrayList<tag> types = tmp.getTags();
+      for(tag i: tmp.getTags())objectMap.get(i).remove(tmp);
     }
     //add new objects requested to be added
     while (!tbc.isEmpty()) {
       GameObject tmp = tbc.remove();
       objects.add(tmp);
-      for(tag i: tmp.getTags())objectMap.get(i).add(tmp);
+      for(tag i: tmp.getTags()){
+        if(!objectMap.containsKey(i)){
+          objectMap.put(i,new HashSet<GameObject>());
+        }
+        objectMap.get(i).add(tmp);
+      }
     }
     //update objects
     for(GameObject obj:objects){
-      obj.update();
+      status = obj.update();
+      //if error, return. In the future but status handling to a different function but whatever
+      if(status != 0){
+        if(status == -1)return status;
+        int temp = handleStatus(status);
+        if(temp != 0)return temp;
+      } 
     }
     return status;
+  }
+  protected abstract int handleStatus(int status);
+  public HashMap<tag,HashSet<GameObject>> getObj(tag[] tags){
+    HashMap<tag,HashSet<GameObject>> out = new HashMap<tag,HashSet<GameObject>>();
+    for(tag i:tags){
+      out.put(i,objectMap.get(i));
+    }
+    return out;
   }
   public void addObj(GameObject obj) {
     tbc.add(obj);
