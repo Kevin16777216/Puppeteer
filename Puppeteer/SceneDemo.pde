@@ -3,8 +3,8 @@ public class DemoScene extends Scene{
   public DemoScene() {
   }
   void init() {
-    tButton test =new tButton(this,70, 70, 155, 155,5);
-    addObj(test);
+    tButton startGameButton =new tButton(this,70, 70, 155, 155,5);
+    addObj(startGameButton);
   }
   int handleStatus(int status){
     switch(status){
