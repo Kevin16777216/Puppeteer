@@ -84,9 +84,23 @@ public class WaitingScreen extends Scene {
   }
 }
 
-public class Viewing extends Level_Loader {
-  public Viewing(String s, readMode mode){
-    super(s,mode);
+public class WaitingScreen2 extends Scene {
+  Screen s;
+  public WaitingScreen2() {
+    s = new Screen(this);
+    s.chooseImage("Assets/waiting2.jpg");
+    addObj(s);
+  }
+  
+   int handleStatus(int status){
+    switch(status){
+      case 0:
+        //
+      case 1:
+        //
+      default:
+        return status;
+    }
   }
 }
 

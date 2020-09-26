@@ -5,6 +5,7 @@ public static enum Status{
 public class GameHandler {
   final int DEFAULT_SCENE = 2;
   int resp;
+  String lvlData = "";
   Scene cScene;
   Status state = Status.GOOD;
   public GameHandler() {
@@ -17,12 +18,12 @@ public class GameHandler {
         if(n == null){
           n = new Networking("server");
           println("Set as server side.");
+          return new Level_Editor("Assets/1",readMode.IMG);
         }
-        return new Level_Editor("Assets/1",readMode.IMG);
+        return new Level_Editor(lvlData,readMode.STRING);
       //Enter Level from Editor.
       case 1:
-        String lvlData = cScene.Meta;
-        print(lvlData);
+        lvlData = cScene.Meta;
         return new Level_Runner(lvlData,readMode.STRING);
       //Main Menu
       case 2: 
@@ -42,8 +43,7 @@ public class GameHandler {
       case 7:
         return new Defeat();
       case 8:
-        String viewData = cScene.Meta;
-        /*return new Viewing(viewData, readMode.STRING);*/
+        return new WaitingScreen2();
     }
     return new DemoScene();
   }
