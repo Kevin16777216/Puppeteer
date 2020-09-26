@@ -24,7 +24,7 @@ void draw() {
     println(n.getPlayerType());
   }
   */
-  println(mouseX + "," + mouseY + "\n");
+  //println(mouseX + "," + mouseY + "\n");
 }
 
 public void keyPressed() {

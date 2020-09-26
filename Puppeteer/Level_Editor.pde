@@ -4,17 +4,12 @@ public class Level_Editor extends Level_Loader{
     super(s,mode);
     clear();
     background(255);
-    tButton NextButton = new tButton(this,1520,970, 290, 100,1);
-    NextButton.setButtonSprite("Assets/confirm.jpg",1520,970,290,100);
+    tButton NextButton = new tButton(this,1520,970, 390, 100,1);
+    NextButton.setButtonSprite("Assets/confirm.jpg",1520,970,390,100);
     tButton toggleOverlay = new tButton(this,10,970, 400,100,12);
     toggleOverlay.setButtonSprite("Assets/tile_swap.jpg",10,970,400,100);
     tButton statusButton = new tButton(this,43, 974, 143, 82, 0);
-    if(n.getPlayerType().equals("puppeteer")){
-      statusButton.setButtonSprite("Assets/current_puppeteer.jpg",710,960,500,120);
-    }
-    else if(n.getPlayerType().equals("puppet")){
-      statusButton.setButtonSprite("Assets/current_puppet.jpg",710,960,500,120);
-    }
+    statusButton.setButtonSprite("Assets/current_puppeteer.jpg",710,960,500,120);
     addObj(statusButton);
     addObj(NextButton);
     addObj(toggleOverlay);
@@ -158,7 +153,10 @@ public class Level_Runner extends Level_Loader{
     super(s,mode);
     Hitbox box = new Hitbox(new PVector(px*32,py*32),new PVector(30,30));
     Player mainPlayer = new Player(this,box,100);
+    Button statusButton = new tButton(this,43, 974, 143, 82, 0);
+    statusButton.setButtonSprite("Assets/current_puppet.jpg",710,960,500,120);
     addObj(mainPlayer);
+    addObj(statusButton);
   }
     int handleStatus(int status){
     switch(status){
