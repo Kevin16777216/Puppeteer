@@ -18,7 +18,7 @@ public class Entity extends GameObject implements Physical{
     velocity = new PVector(0,0);
     healthBar = new Bar(sc, this.box.TR, new PVector(64,10), health);
     maxVelocity = 3;
-    sprite = loadImage("player.png");
+    sprite = loadImage("Assets/player.png");
   }
   public Hitbox getHitbox(){
     return box;
@@ -89,6 +89,7 @@ public class Player extends Entity{
   }
   void render(){
     healthBar.render();
-    image(sprite, box.getX(), box.getY(), box.getXSize(), box.getYSize());
+    box.render();
+    image(sprite, box.getX() - 15, box.getY() - 20, box.getXSize()*2, box.getYSize()*2);
   }
 }
