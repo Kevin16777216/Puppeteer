@@ -75,6 +75,7 @@ abstract class Scene {
     }
     return out;
   }
+  
   public HashSet<GameObject> getObj(tag tags){
     if(!objectMap.containsKey(tags))return null;
     return objectMap.get(tags);
@@ -84,6 +85,9 @@ abstract class Scene {
   }
   public void remObj(GameObject obj) {
     tbd.add(obj);
+  }
+  public void repObj(GameObject obj, GameObject nobj){
+    objects.set(objects.indexOf(obj),nobj);
   }
   public void exit() {
     while(!objects.isEmpty()){
