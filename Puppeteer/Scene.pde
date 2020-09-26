@@ -54,8 +54,12 @@ abstract class Scene {
     
     //Puppet reads mapData (After Puppeteer sendsData - which is when the Puppeteer finishes his level or not.)
     if(n != null) {
+      String networkData = n.getData();
+      //Receiving a gameover means that you win! (The other program user has went to the defeat screen.
+      if(networkData.equals("gameover")) {
+        return 7;
+      }
       if(n.getPlayerType().equals("puppet")) {
-        String networkData = n.getData();
         if(!networkData.equals("No data read!")){
           Meta = networkData;
           return 1;

@@ -117,21 +117,13 @@ public class Level_Runner extends Level_Loader{
       case 0:
         //addObj(tile)
       case 1://Dead
-      if(is_puppeteer){
+        n.sendData("gameover");
         return 7;
-      }
-      else {
-        return 6;
-      }
       case 2://Out of time
-        if(is_puppeteer){
-          return 7;
-        }
-        else{
-          return 6;
-        }
+        n.sendData("gameover");
+        return 7;
       case 3://Success
-        if(is_puppeteer) {
+        if(n.player_type.equals("puppeteer")) {
           n.sendData(Meta);
           return 4;
         }
