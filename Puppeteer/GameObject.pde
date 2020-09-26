@@ -5,7 +5,6 @@ public class GameObject {
   public GameObject(Scene sc){
     this.sc = sc;
     tags = new ArrayList<tag>();
-    tags.add(tag.DEFAULT);
   }
   int update(){ //<>//
     int status = 0;

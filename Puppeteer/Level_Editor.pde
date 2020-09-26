@@ -40,9 +40,11 @@ public class Level_Editor extends Level_Loader{
 }
 public class Palette extends GameObject{
   private ArrayList<Tile> catalogue;
-  private int x,y,rx,ry,choice;
+  private color[] mt = new color[]{color(255,255,0,122),color(255,255,255,122),color(255,0,0,122)};
+  private int x,y,rx,ry,choice,choice2;
   private Level_Editor canvas;
-  private boolean draw;
+  private boolean drawType;
+  private int countRun;
   public Palette(Level_Editor s, int x, int y){
     super(s);
     canvas = s;
@@ -76,20 +78,45 @@ public class Palette extends GameObject{
         }
       }
     }
-    draw =mousePressed&&valid;
-    if(draw){
+    drawType =mousePressed&&valid;
+    if(drawType){
       
       rx = x/32;
       ry = y/32;
-      canvas.modifyTile(ry,rx,choice);
+      if(canvas.hasOverlay){
+        switch(choice2){
+          case 0:
+            countRun = 0;
+            canvas.setSpawn(rx,ry);
+            break;
+          case 1:
+            canvas.removeEnemy(rx,ry);
+            break;
+          default:
+            canvas.addEnemy(rx,ry,choice2-2);
+        }
+      }else{
+        canvas.modifyTile(ry,rx,choice);
+      }
     }
     if(keys.isPressed('a')){
-      choice--;
-      if(choice < 0) choice = catalogue.size()-1;
+      if(canvas.hasOverlay){
+        choice2--;
+        if(choice2 < 0) choice2 = mt.length-1;
+      }else{
+        choice--;
+        if(choice < 0) choice = catalogue.size()-1;
+      }
+      
     }
     if(keys.isPressed('d')){
-      choice++;
-      if(choice == catalogue.size()) choice = 0;
+      if(canvas.hasOverlay){
+        choice2++;
+        if(choice2 == mt.length) choice2 = 0;
+      }else{
+        choice++;
+        if(choice == catalogue.size()) choice = 0;
+      }
     }
     catalogue.get(choice).setX(x-2);
     catalogue.get(choice).setY(y-2);
@@ -98,18 +125,26 @@ public class Palette extends GameObject{
   @Override
   void render(){
     //catalogue.get(choice).needLoad = true;
-    catalogue.get(choice).render();
     int gx = (catalogue.get(choice).getX()+2)/32;
     int gy =(catalogue.get(choice).getY()+2)/32;
+    fill(mt[0]);
+    rect(canvas.px*32,canvas.py*32,16,32);
+    //fill(mt[0]);
+    if(canvas.hasOverlay){
+      fill(mt[choice2]);
+      rect(catalogue.get(choice).getX(),catalogue.get(choice).getY(),32,32);
+      //fill(mt[choice2]);
+    }else{
+      catalogue.get(choice).render();
+      catalogue.get(choice).needLoad = true;
+    }
     canvas.refreshNeighbor(gx,gy);
-    catalogue.get(choice).needLoad = true;
   }
 }
 public class Level_Runner extends Level_Loader{
-  int timer = 20;
   public Level_Runner(String s, readMode mode){
     super(s,mode);
-    Hitbox box = new Hitbox(new PVector(320,320),new PVector(30,30));
+    Hitbox box = new Hitbox(new PVector(px*32,py*32),new PVector(30,30));
     Player mainPlayer = new Player(this,box,100);
     addObj(mainPlayer);
   }

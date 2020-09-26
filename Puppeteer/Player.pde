@@ -8,8 +8,8 @@ public class Entity extends GameObject implements Physical{
   protected float ACCEL_CONSTANT = 0.07;
   protected float DECCEL_CONSTANT = 0.935;
   protected Hitbox dummyBox;
-  protected Level_Runner run;
-  public Entity(Level_Runner sc,Hitbox box,int health){
+  protected Level_Loader run;
+  public Entity(Level_Loader sc,Hitbox box,int health){
     super(sc);
     this.run =sc;
     this.health = health;
@@ -21,7 +21,12 @@ public class Entity extends GameObject implements Physical{
   public Hitbox getHitbox(){
     return box;
   }
-  protected boolean checkCol(HashSet<GameObject> Boxes){
+  protected boolean checkCol(HashSet<Physical> Boxes){
+    if(checkBounds())return true;
+    if(Boxes != null)for(Physical i:Boxes)if(box.isHit(i.getHitbox()))return true;
+    return false;
+  }
+  protected boolean checkEnv(HashSet<GameObject> Boxes){
     if(checkBounds())return true;
     if(Boxes != null)for(GameObject i:Boxes)if(box.isHit(((Physical)i).getHitbox()))return true;
     return false;
@@ -31,23 +36,23 @@ public class Entity extends GameObject implements Physical{
     return false;
   }
   protected void checkForCollision(){
-    HashSet<GameObject> Boxes = sc.getObj(tag.SOLID);
     Hitbox clone = new Hitbox(box.TR.copy(),box.Dimensions.copy());
     box.TR.x+= velocity.x;
-    if(checkCol(Boxes))box.TR = clone.TR.copy();
+    if(checkCol(run.solidcache))box.TR = clone.TR.copy();
     clone.TR = box.TR.copy();
     box.TR.y+= velocity.y;
-    if(checkCol(Boxes))box.TR = clone.TR.copy();
-  }
-  protected void normalizeVelocity(){
-     if(velocity.mag() >= maxVelocity){
-        velocity.setMag(maxVelocity);
-     }
+    if(checkCol(run.solidcache))box.TR = clone.TR.copy();
   }
   int update(){
-    normalizeVelocity();
+    if(velocity.mag() >= maxVelocity){
+        velocity.setMag(maxVelocity);
+    }
     velocity.mult(DECCEL_CONSTANT);
     checkForCollision();
+    if(velocity.mag() > .1){
+      run.refreshNeighbor((int)(box.TR.x-box.TR.x%32)/32,(int)(box.TR.y-box.TR.y%32)/32);
+    }
+    healthBar.pos =new PVector(box.TR.x-16,box.TR.y-16);
     return 0;
   }
 }
@@ -63,19 +68,16 @@ public class Player extends Entity{
   }
   private boolean checkLava(){
     HashSet<GameObject> lava = sc.getObj(tag.LAVA);
-    return checkCol(lava);
+    return checkEnv(lava);
   }
   private boolean checkExit(){
     HashSet<GameObject> exit = sc.getObj(tag.EXIT);
-    return checkCol(exit);
+    return checkEnv(exit);
   }
   int update(){
     applyInput();
     super.update();
-    int gx =(int)(box.TR.x-box.TR.x%32)/32;
-    int gy =(int)(box.TR.y-box.TR.y%32)/32;
-    run.refreshNeighbor(gx,gy);
-    healthBar.pos =new PVector(box.TR.x-16,box.TR.y-16);
+    
     if(checkLava())return 1;
     if(checkExit())return 3;
     if(run.timer<0)return 2;

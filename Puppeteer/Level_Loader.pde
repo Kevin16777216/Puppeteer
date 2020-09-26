@@ -3,15 +3,18 @@ import java.util.Arrays;
 public class Level_Loader extends Scene{
   Tile[][] tiles = new Tile[30][60];
   int level;
-  int px,py;
+  int px,py=px=2;
+  int timer = 20;
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-  
+  HashSet<Physical> solidcache;
+  //HashSet<Physical> solidcache;
   //String s can either be the string data itself OR the image. 
   public Level_Loader(String s, readMode mode){
     if(mode == readMode.IMG){
       s =imageToString(s);
     }
     clearLevel();
+    solidcache = new HashSet<Physical>();
     //Example String: "[[1,3,2,3,4,3],[1,2,3,4,3,2,1]]:[4,3]:[[0,4,3],[1,6,3]]"
     //The last value of the monster 2D array is the type/id.
     //Splits the string into a 2D Array of Strings. (First is for Tiles, The Rest are for Enemies)
@@ -32,26 +35,62 @@ public class Level_Loader extends Scene{
        int[] p_loc =toIntArray(string_data[1]);
        px = p_loc[0];
        py = p_loc[1];
-       float[][] monster_data = toFloatArray(string_data[2]);
-       for(int x = 0; x < monster_data.length; x++){
-         int x_cor = (int)monster_data[x][0];
-         int y_cor = (int)monster_data[x][1];
-         int id = (int)monster_data[x][2];
-         Enemy tmp = new Enemy(this,x_cor*32,y_cor*32,id);
-         addObj(tmp);
-         enemies.add(tmp);
+       if(string_data.length>2){
+         float[][] monster_data = toFloatArray(string_data[2]);
+         for(int x = 0; x < monster_data.length; x++){
+           int x_cor = (int)monster_data[x][0];
+           int y_cor = (int)monster_data[x][1];
+           int id = (int)monster_data[x][2];
+           Enemy tmp = new Enemy(this,x_cor*32,y_cor*32,id);
+           addObj(tmp);
+           enemies.add(tmp);
+         }
        }
     }
+  }
+  int update(){
+    int out = super.update();
+    solidcache.clear();
+    HashSet<GameObject> tmp=getObj(tag.SOLID);
+    for(GameObject i:tmp){
+      solidcache.add((Physical)i);
+    }
+    return out;
+    
   }
   public void refreshTile(int x, int y){
     tiles[x][y].needLoad = true;
   }
+  public void addEnemy(int x, int y, int id){
+    if(findEnemy(x, y) == -1){
+      Enemy tmp = new Enemy(this,x*32,y*32,id);
+      addObj(tmp);
+      enemies.add(tmp);
+    }
+  }
+  public int findEnemy(int x, int y){
+    for(int i =0;i<enemies.size();i++){
+      Enemy tmp = enemies.get(i);
+      int gx =(int)(tmp.getX()-tmp.getX()%32)/32;
+      int gy =(int)(tmp.getY()-tmp.getY()%32)/32;
+      if(gx ==x &&gy == y)return i;
+    }
+    return -1;
+  }
+  public void removeEnemy(int x, int y){
+    int res = findEnemy(x,y);
+    if(res!=-1){
+      remObj(enemies.remove(res));
+    }
+  }
   public void refreshNeighbor(int gx, int gy){
     int w=Math.min(gx+3,60);
-    for(int i =Math.max(gx-3,0);i<w;i++){
-      int h =Math.min(gy+3,30);
-      for(int j = Math.max(gy-3,0);j<h;j++){
-        refreshTile(j,i);
+    int r=Math.max(gy-2,0);
+    int h =Math.min(gy+3,30);
+    
+    for(int i =Math.max(gx-2,0);i<w;++i){
+      for(int j = r;j<h;++j){
+        tiles[j][i].needLoad = true;
       }
     }
   }
@@ -67,7 +106,11 @@ public class Level_Loader extends Scene{
     }
     return floatArray;
   }
-  
+  public void setSpawn(int x, int y){
+    refreshTile(py,px);
+    px=x;
+    py=y;
+  }
   public int[] toIntArray(String data){
     String[] items = data.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
     int[] results = new int[items.length];
@@ -91,9 +134,6 @@ public class Level_Loader extends Scene{
         return status;
     }
   }
-  public Tile[] nearbyTiles(){
-    return null;
-  }
   public String toString() {
     //return Arrays.deepToString(tiles);
     String ret_string = "[[";
@@ -108,8 +148,23 @@ public class Level_Loader extends Scene{
         ret_string += "], [";
       }
       else {
-        ret_string += "]]:";
+        ret_string += "]]:[";
       }
+    }
+    ret_string+=Integer.toString(px)+","+Integer.toString(py)+"]";
+    if(enemies.size()>0){
+      String en_string = ":[";
+      Enemy tmp;
+      for(int i = 0;i <enemies.size();i++) {
+        tmp =enemies.get(i);
+        int gx =(int)(tmp.getX()-tmp.getX()%32)/32;
+        int gy =(int)(tmp.getY()-tmp.getY()%32)/32;
+        en_string+="["+gx+","+gy+","+tmp.id+"]";
+        if(i == enemies.size()-1)break;
+        en_string+=",";
+      }
+      en_string+="]";
+      ret_string+=en_string;
     }
     return ret_string;
     /*

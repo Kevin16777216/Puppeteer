@@ -4,6 +4,8 @@ public class Button extends GameObject{
   private color borderColor = color(12);
   private color fillColor = color(235);
   private String text = "test";
+  private boolean down;
+  private boolean ready;
   public Button(Scene ptr,int x, int y, int w, int h){
     this(ptr,new Hitbox(new PVector(x,y),new PVector(w,h)));
   }
@@ -16,9 +18,11 @@ public class Button extends GameObject{
   int update(){
     int status = 0;
     isHover = box.isHit(new PVector(mouseX,mouseY));
-    if(isHover && mousePressed){
+    //if(isHover&&ready)
+    if(isHover && mousePressed && !down){
       status = action();
     }
+    down = mousePressed;
     return status;
   }
   boolean getHover(){return isHover=box.isHit(new PVector(mouseX,mouseY));}
