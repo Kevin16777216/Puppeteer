@@ -29,8 +29,18 @@ public class GameHandler {
         return new Main_Menu();
       case 3:
         return new Instructions();
+      case 4:
+        if(n == null){
+          n = new Networking("client");
+          println("Set as client side.");
+        }
+        return new WaitingScreen();
       case 5:
         return new DemoScene();
+      case 6:
+        return new Victory();
+      case 7:
+        return new Defeat();
     }
     return new DemoScene();
   }
@@ -43,11 +53,12 @@ public class GameHandler {
       case -1:
         cScene.exit();
         exit();
+      //Changes from Level Editor to Level Runner.
       case 1:
         cScene.exit();
         loadScene(1);
         break;
-      //Changes to loadScene(0) from the Start Menu.
+      //Changes to Level Editor from the Start Menu.
       case 2:
         cScene.exit();
         loadScene(0);
@@ -62,6 +73,18 @@ public class GameHandler {
         cScene.exit();
         loadScene(2);
         break;
+      //Goes to Waiting Screen
+      case 5:
+        cScene.exit();
+        loadScene(4);
+        break;
+      //Goes to Victory Screen
+      case 6:
+        cScene.exit();
+        loadScene(6);
+      case 7:
+        cScene.exit();
+        loadScene(7);
       default:
         //clean up other garbage
         cScene.exit();

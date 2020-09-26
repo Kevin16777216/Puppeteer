@@ -25,7 +25,7 @@ public class Level_Editor extends Level_Loader{
         //addObj(tile)
       case 1:
         Meta = toString();
-        n.sendData(Meta);
+        //n.sendData(Meta);
         return 1;
       default:
         return status;
@@ -100,22 +100,37 @@ public class Palette extends GameObject{
   }
 }
 public class Level_Runner extends Level_Loader{
-  public Level_Runner(String s, readMode mode){
+  boolean is_puppeteer;
+  public Level_Runner(String s, readMode mode, boolean is_puppeteer){
     super(s,mode);
     Hitbox box = new Hitbox(new PVector(320,320),new PVector(30,30));
     Player mainPlayer = new Player(this,box,100);
     addObj(mainPlayer);
+    this.is_puppeteer = is_puppeteer;
   }
     int handleStatus(int status){
     switch(status){
       case 0:
         //addObj(tile)
       case 1://Dead
-        return 2;
+      if(is_puppeteer){
+        return 7;
+      }
+      else {
+        return 6;
+      }
       case 2://Out of time
-        return 2;
+        if(is_puppeteer){
+          return 7;
+        }
+        else{
+          return 6;
+        }
       case 3://Success
-        return 4;
+        if(is_puppeteer) {
+          n.sendData(Meta);
+          return 4;
+        }
       default:
         return status;
     }

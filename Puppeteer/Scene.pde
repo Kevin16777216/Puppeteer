@@ -52,14 +52,17 @@ abstract class Scene {
       } 
     }
     
-    //Goes to GameHandler for case 1. Changes!
+    //Puppet reads mapData (After Puppeteer sendsData - which is when the Puppeteer finishes his level or not.)
     if(n != null) {
-      String networkData = n.getData();
-      if(!networkData.equals("No data read!")){
-        Meta = networkData;
-        return 1;
+      if(n.getPlayerType().equals("puppet")) {
+        String networkData = n.getData();
+        if(!networkData.equals("No data read!")){
+          Meta = networkData;
+          return 1;
+        }
       }
     }
+    
     return status;
   }
   protected abstract int handleStatus(int status);

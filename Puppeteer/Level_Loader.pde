@@ -3,7 +3,8 @@ import java.util.Arrays;
 public class Level_Loader extends Scene{
   Tile[][] tiles = new Tile[30][60];
   int level;
-  //Enemies[] enemies;
+  //int[] player_location = new int[2];
+  //ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   
   //String s can either be the string data itself OR the image. 
   public Level_Loader(String s, readMode mode){
@@ -11,7 +12,8 @@ public class Level_Loader extends Scene{
       s =imageToString(s);
     }
     clearLevel();
-    //Example String: "[[1,3,2,3,4,3],[1,2,3,4,3,2,1]]:(Monster,4,3):(Monster,6,3):"
+    //Example String: "[[1,3,2,3,4,3],[1,2,3,4,3,2,1]]:[4,3]:[[0,4,3],[1,6,3]]"
+    //The last value of the monster 2D array is the type/id.
     //Splits the string into a 2D Array of Strings. (First is for Tiles, The Rest are for Enemies)
     String[] string_data = s.split(":");
     float[][] tile_data = toFloatArray(string_data[0]);
@@ -30,6 +32,19 @@ public class Level_Loader extends Scene{
         addObj(tmp);
       }
     }
+   //Gets Player Location Data
+   /*
+   player_location = toIntArray(string_data[1]);
+   float[][] monster_data = toFloatArray(string_data[2]);
+   for(int x = 0; x < monster_data.length; x++){
+     int x_cor = (int)monster_data[x][0];
+     int y_cor = (int)monster_data[x][1];
+     int id = (int)monster_data[x][2];
+     Enemy tmp = new Enemy(this,x_cor*32,y_cor*32,id);
+     addObj(tmp);
+     enemies.add(tmp);
+   }
+   */
   }
   public void refreshTile(int x, int y){
     tiles[x][y].needLoad = true;
@@ -57,6 +72,20 @@ public class Level_Loader extends Scene{
     }
     return floatArray;
   }
+  
+  public int[] toIntArray(String data){
+    String[] items = data.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
+    int[] results = new int[items.length];
+    for (int i = 0; i < items.length; i++) {
+    try {
+        results[i] = Integer.parseInt(items[i]);
+    } catch (NumberFormatException nfe) {
+        //NOTE: write something here if you need to recover from formatting errors
+    };
+    }
+    return results;
+  }
+  
   int handleStatus(int status){
     switch(status){
       case 0:
@@ -84,10 +113,28 @@ public class Level_Loader extends Scene{
         ret_string += "], [";
       }
       else {
-        ret_string += "]]";
+        ret_string += "]]:";
       }
     }
     return ret_string;
+    /*
+    //Add Player Location...
+    ret_string += "[" + player_location[0] + "," + player_location[1] + "]:";
+    //Add Monster Locations.  
+    ret_string += "[[";
+    for(int i = 0; i < enemies.size(); i++) {
+      ret_string += enemies.get(i).getX();
+      ret_string += "," + enemies.get(i).getY();
+      ret_string += "," + enemies.get(i).getID() + "]";
+      if(i != enemies.size() - 1) {
+        ret_string += ",[";
+      }
+      else{
+        ret_string += "]";
+      }
+    }
+    return ret_string;
+    */
   }
   
   public String imageToString(String level_name){
