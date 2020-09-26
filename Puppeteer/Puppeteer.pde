@@ -3,6 +3,8 @@ KeyListener keys = new KeyListener();
 double previous = millis();
 double lag = 0.0;
 HashMap<Integer,key> input = new HashMap<Integer,key>();
+Networking n = null;
+
 void setup() {
   size(1920,1080);
   frameRate(4000);
@@ -18,6 +20,7 @@ void draw() {
   handle.update();
   handle.render();
   keys.update();
+  println("Mouse X:" + mouseX + " Mouse Y:" + mouseY);
 }
 
 public void keyPressed() {

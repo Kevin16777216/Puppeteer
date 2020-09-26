@@ -67,6 +67,5 @@ public class Bar extends GameObject{
   }
   public void updateValue(float value){
     this.value = value;
-  }
-  
+  } 
 }

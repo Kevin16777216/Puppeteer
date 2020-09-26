@@ -23,6 +23,7 @@ public class Level_Editor extends Level_Loader{
         //addObj(tile)
       case 1:
         Meta = toString();
+        n.sendData(Meta);
         return 1;
       default:
         return status;
