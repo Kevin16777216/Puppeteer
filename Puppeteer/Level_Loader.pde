@@ -23,11 +23,7 @@ public class Level_Loader extends Scene{
         //Increasing Rows --> Vertical Displacement, Increasing Columns --> Horizontal Displacement.
         int id =(int)tile_data[x][y];
         Tile tmp;
-        if(id == 1){
-          tmp = new Wall(this, y*32,x*32,id);
-        }else{
-          tmp = new Tile(this, y*32,x*32,id);
-        }
+        tmp = new Tile(this, y*32,x*32,id);
         tiles[x][y] = tmp;
         addObj(tmp);
       }

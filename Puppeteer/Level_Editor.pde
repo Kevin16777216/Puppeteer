@@ -13,7 +13,7 @@ public class Level_Editor extends Level_Loader{
   public boolean modifyTile(int x, int y, int id){
     switch(id){
       case 1:
-        Wall tmp =new Wall(this, y*32,x*32,id);
+        Tile tmp =new Tile(this, y*32,x*32,id);
         repObj(tiles[x][y],tmp);
         tiles[x][y]= tmp;
         break;
@@ -106,6 +106,7 @@ public class Palette extends GameObject{
   }
 }
 public class Level_Runner extends Level_Loader{
+  int timer = 20;
   public Level_Runner(String s, readMode mode){
     super(s,mode);
     Hitbox box = new Hitbox(new PVector(320,320),new PVector(30,30));

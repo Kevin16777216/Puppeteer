@@ -59,10 +59,21 @@ public class Player extends Entity{
     if(keys.isHeld('w'))velocity.y-=ACCEL_CONSTANT;
     if(keys.isHeld('s'))velocity.y+=ACCEL_CONSTANT;
   }
+  private boolean checkLava(){
+    HashSet<GameObject> lava = sc.getObj(tag.LAVA);
+    return checkCol(lava);
+  }
+  private boolean checkExit(){
+    HashSet<GameObject> lava = sc.getObj(tag.EXIT);
+    return checkCol(lava);
+  }
   int update(){
     applyInput();
     super.update();
     run.refreshNeighbor((int)(box.TR.x-box.TR.x%32)/32, (int)(box.TR.y-box.TR.y%32)/32);
+    if(checkLava())return 1;
+    if(checkExit())return 3;
+    if(run.timer<0)return 2;
     return 0;
   }
   void render(){
