@@ -131,6 +131,11 @@ public class Level_Runner extends Level_Loader{
           n.sendData(sendData());
           return 8;
         }
+        if(n.player_type.equals("puppet")) {
+          n.sendData("swap");
+          n.changePlayerType();
+          return 2;
+        }
       default:
         return status;
     }

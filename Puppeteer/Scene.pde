@@ -66,6 +66,10 @@ abstract class Scene {
         }
       }
       if(n.getPlayerType().equals("puppeteer")) {
+        if(networkData.equals("swap")) {
+           n.changePlayerType();
+           return 5;
+        }
         if(!networkData.equals("No data read!")){
           Meta = networkData;
           return 8;
