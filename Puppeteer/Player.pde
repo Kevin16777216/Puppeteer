@@ -17,21 +17,20 @@ public class Entity extends GameObject implements Physical{
   public Hitbox getHitbox(){
     return box;
   }
-  protected void collisionResponse(){
+  protected boolean checkCol(HashSet<GameObject> Boxes){
+    if(Boxes != null)for(GameObject i:Boxes)if(box.isHit(((Physical)i).getHitbox()))return true;
+    return false;
   }
   protected void checkForCollision(){
     HashSet<GameObject> Boxes = sc.getObj(tag.SOLID);
-    if(Boxes != null){
-      for(GameObject i:Boxes){
-        dummyBox = ((Physical)i).getHitbox();
-        if(dummyBox.isHit(box)){
-        
-        }
-      }
-    }
+    Hitbox clone = new Hitbox(box.TR.copy(),box.Dimensions.copy());
+    box.TR.x+= velocity.x;
+    if(checkCol(Boxes))box.TR = clone.TR.copy();
+    clone.TR = box.TR.copy();
+    box.TR.y+= velocity.y;
+    if(checkCol(Boxes))box.TR = clone.TR.copy();
   }
   protected void normalizeVelocity(){
-    println(velocity.toString());
      if(velocity.mag() >= maxVelocity){
         velocity.setMag(maxVelocity);
      }
@@ -39,7 +38,6 @@ public class Entity extends GameObject implements Physical{
   int update(){
     normalizeVelocity();
     velocity.mult(DECCEL_CONSTANT);
-    box.translate(velocity);
     checkForCollision();
     return 0;
   }

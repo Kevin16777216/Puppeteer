@@ -7,9 +7,12 @@ public class Level_Editor extends Level_Loader{
   }
   public boolean modifyTile(int x, int y, int id){
     if(id ==1){
-      tiles[x][y]= new Wall(this, y*32,x*32,id);
+      Wall tmp =new Wall(this, y*32,x*32,id);
+      tiles[x][y]= tmp;
+      addObj(tmp);
+    }else{
+      tiles[x][y].setID(id);
     }
-    tiles[x][y].setID(id);
     return true;
   }
   int handleStatus(int status){
