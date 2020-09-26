@@ -3,8 +3,8 @@ import java.util.Arrays;
 public class Level_Loader extends Scene{
   Tile[][] tiles = new Tile[30][60];
   int level;
-  //int[] player_location = new int[2];
-  //ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+  int px,py;
+  ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   
   //String s can either be the string data itself OR the image. 
   public Level_Loader(String s, readMode mode){
@@ -32,19 +32,20 @@ public class Level_Loader extends Scene{
         addObj(tmp);
       }
     }
-   //Gets Player Location Data
-   /*
-   player_location = toIntArray(string_data[1]);
-   float[][] monster_data = toFloatArray(string_data[2]);
-   for(int x = 0; x < monster_data.length; x++){
-     int x_cor = (int)monster_data[x][0];
-     int y_cor = (int)monster_data[x][1];
-     int id = (int)monster_data[x][2];
-     Enemy tmp = new Enemy(this,x_cor*32,y_cor*32,id);
-     addObj(tmp);
-     enemies.add(tmp);
-   }
-   */
+    if(string_data.length>1){
+       int[] p_loc =toIntArray(string_data[1]);
+       px = p_loc[0];
+       py = p_loc[1];
+       float[][] monster_data = toFloatArray(string_data[2]);
+       for(int x = 0; x < monster_data.length; x++){
+         int x_cor = (int)monster_data[x][0];
+         int y_cor = (int)monster_data[x][1];
+         int id = (int)monster_data[x][2];
+         Enemy tmp = new Enemy(this,x_cor*32,y_cor*32,id);
+         addObj(tmp);
+         enemies.add(tmp);
+       }
+    }
   }
   public void refreshTile(int x, int y){
     tiles[x][y].needLoad = true;

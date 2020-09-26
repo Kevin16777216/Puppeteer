@@ -1,10 +1,13 @@
 public class Level_Editor extends Level_Loader{
+  boolean hasOverlay = false;
   public Level_Editor(String s, readMode mode){
     super(s,mode);
     clear();
     background(255);
     tButton NextButton = new tButton(this,1620, 970, 290, 100,1);
+    tButton toggleOverlay = new tButton(this,1020,970, 200,100,12);
     addObj(NextButton);
+    addObj(toggleOverlay);
     addObj(new Palette(this,960,480));
   }
   public boolean modifyTile(int x, int y, int id){
@@ -27,6 +30,9 @@ public class Level_Editor extends Level_Loader{
         Meta = toString();
         //n.sendData(Meta);
         return 1;
+      case 12:
+        hasOverlay = !hasOverlay;
+        return 0;
       default:
         return status;
     }
