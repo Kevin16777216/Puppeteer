@@ -6,12 +6,14 @@ public class Level_Editor extends Level_Loader{
     addObj(NextButton);
   }
   public boolean modifyTile(int x, int y, int id){
-    if(id ==1){
-      Wall tmp =new Wall(this, y*32,x*32,id);
-      tiles[x][y]= tmp;
-      addObj(tmp);
-    }else{
-      tiles[x][y].setID(id);
+    switch(id){
+      case 1:
+        Wall tmp =new Wall(this, y*32,x*32,id);
+        tiles[x][y]= tmp;
+        addObj(tmp);
+        break;
+      default:
+        tiles[x][y].setID(id);
     }
     return true;
   }
