@@ -53,6 +53,7 @@ public class GameHandler {
       case -1:
         cScene.exit();
         exit();
+      //Changes from Level Editor to Level Runner.
       case 1:
         cScene.exit();
         loadScene(1);
@@ -77,6 +78,13 @@ public class GameHandler {
         cScene.exit();
         loadScene(4);
         break;
+      //Goes to Victory Screen
+      case 6:
+        cScene.exit();
+        loadScene(6);
+      case 7:
+        cScene.exit();
+        loadScene(7);
       default:
         //clean up other garbage
         cScene.exit();
