@@ -1,5 +1,6 @@
 public class Entity extends GameObject implements Physical{
   protected int health;
+  protected Bar healthBar;
   protected PVector velocity;
   protected float maxVelocity=2;
   protected boolean isActive;
@@ -14,6 +15,7 @@ public class Entity extends GameObject implements Physical{
     this.health = health;
     this.box = box;
     velocity = new PVector(0,0);
+    healthBar = new Bar(sc, this.box.TR, new PVector(64,10), health);
     maxVelocity = 3;
   }
   public Hitbox getHitbox(){
@@ -64,19 +66,23 @@ public class Player extends Entity{
     return checkCol(lava);
   }
   private boolean checkExit(){
-    HashSet<GameObject> lava = sc.getObj(tag.EXIT);
-    return checkCol(lava);
+    HashSet<GameObject> exit = sc.getObj(tag.EXIT);
+    return checkCol(exit);
   }
   int update(){
     applyInput();
     super.update();
-    run.refreshNeighbor((int)(box.TR.x-box.TR.x%32)/32, (int)(box.TR.y-box.TR.y%32)/32);
+    int gx =(int)(box.TR.x-box.TR.x%32)/32;
+    int gy =(int)(box.TR.y-box.TR.y%32)/32;
+    run.refreshNeighbor(gx,gy);
+    healthBar.pos =new PVector(box.TR.x-16,box.TR.y-16);
     if(checkLava())return 1;
     if(checkExit())return 3;
     if(run.timer<0)return 2;
     return 0;
   }
   void render(){
+    healthBar.render();
     box.render();
   }
 }
