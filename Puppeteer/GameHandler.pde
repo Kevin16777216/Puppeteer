@@ -41,6 +41,8 @@ public class GameHandler {
         return new Victory();
       case 7:
         return new Defeat();
+      case 8:
+        return new Viewing(n.getData(), readMode.STRING);
     }
     return new DemoScene();
   }
@@ -82,9 +84,17 @@ public class GameHandler {
       case 6:
         cScene.exit();
         loadScene(6);
+        break;
+      //Goes to Defeat Screen
       case 7:
         cScene.exit();
         loadScene(7);
+        break;
+      //Goes to Viewing Screen
+      case 8:
+        cScene.exit();
+        loadScene(8);
+        break;
       default:
         //clean up other garbage
         cScene.exit();

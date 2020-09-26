@@ -57,12 +57,18 @@ abstract class Scene {
       String networkData = n.getData();
       //Receiving a gameover means that you win! (The other program user has went to the defeat screen.
       if(networkData.equals("gameover")) {
-        return 7;
+        return 6;
       }
       if(n.getPlayerType().equals("puppet")) {
         if(!networkData.equals("No data read!")){
           Meta = networkData;
           return 1;
+        }
+      }
+      if(n.getPlayerType().equals("puppeteer")) {
+        if(!networkData.equals("No data read!")){
+          Meta = networkData;
+          return 8;
         }
       }
     }
