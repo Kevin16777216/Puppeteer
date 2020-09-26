@@ -4,6 +4,9 @@ public static enum tag{
   ENEMY,
   TILE,
   SOLID,
+  PALETTE,
+  BUTTON,
+  ENTITY,
   DEFAULT
 }
 public static enum readMode{

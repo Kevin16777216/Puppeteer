@@ -3,11 +3,12 @@ import java.util.HashSet;
 abstract class Scene {
   //Map type to GameObject Indexes. Allows for O(1) Search by Tag, Addition, Removal
   HashMap<tag,HashSet<GameObject>> objectMap;
-  HashSet<GameObject> objects;
+  ArrayList<GameObject> objects;
+  String Meta;
   //to be destroyed/created
   private LinkedList<GameObject> tbd,tbc;
   public Scene() {
-    objects = new HashSet<GameObject>();
+    objects = new ArrayList<GameObject>();
     objectMap = new HashMap<tag,HashSet<GameObject>>();
     tbd = new LinkedList<GameObject>();
     tbc = new LinkedList<GameObject>();
@@ -16,8 +17,8 @@ abstract class Scene {
   void init() {
   }
   void render(){
-    for (GameObject obj : objects) {
-      obj.render();
+    for (int i = 0;i<objects.size();i++) {
+      objects.get(i).render();
     }
   }
   int update() {
@@ -56,7 +57,9 @@ abstract class Scene {
   public HashMap<tag,HashSet<GameObject>> getObj(tag[] tags){
     HashMap<tag,HashSet<GameObject>> out = new HashMap<tag,HashSet<GameObject>>();
     for(tag i:tags){
-      out.put(i,objectMap.get(i));
+      if(objectMap.containsKey(i)){
+        out.put(i,objectMap.get(i));
+      }
     }
     return out;
   }
@@ -67,5 +70,8 @@ abstract class Scene {
     tbd.add(obj);
   }
   public void exit() {
+    while(!objects.isEmpty()){
+      objects.remove(0);
+    }
   }
 }

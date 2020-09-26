@@ -2,6 +2,7 @@ import java.util.Arrays;
 
 public class Level_Loader extends Scene{
   Tile[][] tiles = new Tile[30][60];
+  int level;
   //Enemies[] enemies;
   
   //String s can either be the string data itself OR the image. 
@@ -18,7 +19,7 @@ public class Level_Loader extends Scene{
       for(int y = 0; y < tile_data[x].length; y++) {
         //The reason why it's inputted as y,x is because x represents the # of rows while y represents the # of columns.
         //Increasing Rows --> Vertical Displacement, Increasing Columns --> Horizontal Displacement.
-        Tile tmp = new Tile(this, y,x,(int)tile_data[x][y]);
+        Tile tmp = new Tile(this, y*32,x*32,(int)tile_data[x][y]);
         tiles[x][y] = tmp;
         addObj(tmp);
       }
@@ -46,6 +47,9 @@ public class Level_Loader extends Scene{
       default:
         return status;
     }
+  }
+  public Tile[] nearbyTiles(){
+    return null;
   }
   public String toString() {
     //return Arrays.deepToString(tiles);

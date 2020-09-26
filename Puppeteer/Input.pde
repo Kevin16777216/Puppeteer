@@ -1,13 +1,12 @@
 import java.util.LinkedList;
 
 public class KeyListener {
-  private HashMap<Integer,key> input = new HashMap<Integer,key>();
-
+  public HashMap<Integer,key> input = new HashMap<Integer,key>();
   // List used to determine which keys need to be updated.
   private LinkedList<key> updateKeys = new LinkedList<key>();
 
   // List used to determine which keys are listened to.
-  private final int[] events = { UP, DOWN, LEFT, RIGHT};
+  private final int[] events = { UP, DOWN, LEFT, RIGHT,'w'-32,'a'-32,'s'-32,'d'-32,32};
   public KeyListener() {
     for(int i: events) {
       input.put(i,new key());
@@ -48,9 +47,30 @@ public class KeyListener {
 
   public KeyState getState(char item) {
     try {
-      return input.get((int) item - 32).getState();
+      return input.get((int)item - 32).getState();
     } catch(Exception e) {
       return KeyState.NOTHELD;
+    }
+  }
+  public KeyState getState(int item) {
+    try {
+      return input.get(item).getState();
+    } catch(Exception e) {
+      return KeyState.NOTHELD;
+    }
+  }
+  public boolean isPressed(int item){
+    try {
+      return getState(item)==KeyState.PRESSED;
+    } catch(Exception e) {
+      return false;
+    }
+  }
+  public boolean isPressed(char item) {
+    try {
+      return getState(item) == KeyState.PRESSED;
+    } catch (Exception e) {
+      return false;
     }
   }
 

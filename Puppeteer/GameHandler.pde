@@ -4,7 +4,7 @@ public static enum Status{
 }
 public class GameHandler {
   final int DEFAULT_SCENE = 0;
-  int resp = 0;
+  int resp;
   Scene cScene;
   Status state = Status.GOOD;
   public GameHandler() {
@@ -12,8 +12,14 @@ public class GameHandler {
   }
   private Scene getScene(int id) {
     switch (id) {
+      //Enter Editor, Default Level
       case 0:
-        return new Level_Loader("1",readMode.IMG);
+        return new Level_Editor("1",readMode.IMG);
+      //Enter Level from Editor.
+      case 1:
+        String lvlData = cScene.Meta;
+        print(lvlData);
+        return new Level_Runner(lvlData,readMode.STRING);
       case 5:
         return new DemoScene();
     }
@@ -25,10 +31,12 @@ public class GameHandler {
 
   private void handleSignal(int code) {
     switch (code) {
-      //Error
-      case 1:
+      case -1:
         cScene.exit();
         exit();
+      case 1:
+        cScene.exit();
+        loadScene(1);
         break;
       default:
         //clean up other garbage
