@@ -4,7 +4,7 @@ public class Entity extends GameObject implements Physical{
   protected float maxVelocity=3;
   protected boolean isActive;
   protected Hitbox box;
-  protected float ACCEL_CONSTANT = 0.1;
+  protected float ACCEL_CONSTANT = 0.2;
   protected float DECCEL_CONSTANT = 0.935;
   protected Hitbox dummyBox;
   public Entity(Level_Runner sc,Hitbox box,int health){
