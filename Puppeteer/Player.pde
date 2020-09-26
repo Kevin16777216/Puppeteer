@@ -9,6 +9,7 @@ public class Entity extends GameObject implements Physical{
   protected float DECCEL_CONSTANT = 0.935;
   protected Hitbox dummyBox;
   protected Level_Loader run;
+  protected PImage sprite;
   public Entity(Level_Loader sc,Hitbox box,int health){
     super(sc);
     this.run =sc;
@@ -17,6 +18,7 @@ public class Entity extends GameObject implements Physical{
     velocity = new PVector(0,0);
     healthBar = new Bar(sc, this.box.TR, new PVector(64,10), health);
     maxVelocity = 3;
+    sprite = loadImage("player.png");
   }
   public Hitbox getHitbox(){
     return box;
@@ -87,6 +89,6 @@ public class Player extends Entity{
   }
   void render(){
     healthBar.render();
-    box.render();
+    image(sprite, box.getX(), box.getY(), box.getXSize(), box.getYSize());
   }
 }

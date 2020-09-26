@@ -31,4 +31,17 @@ public class Hitbox{
   void render(){
     rect(TR.x,TR.y,Dimensions.x,Dimensions.y);
   }
+  
+  public int getX() {
+    return (int)TR.x;
+  }
+  public int getY() {
+    return (int)TR.y;
+  }
+  public int getXSize() {
+    return (int)Dimensions.x;
+  }
+  public int getYSize() {
+    return (int)Dimensions.y;
+  }
 }
