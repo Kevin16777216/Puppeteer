@@ -20,9 +20,11 @@ void draw() {
   handle.update();
   handle.render();
   keys.update();
-  if(n != null){
+  /*if(n != null){
     println(n.getPlayerType());
   }
+  */
+  println(mouseX + "," + mouseY + "\n");
 }
 
 public void keyPressed() {

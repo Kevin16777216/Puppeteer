@@ -6,6 +6,11 @@ public class Button extends GameObject{
   private String text = "test";
   private boolean down;
   private boolean ready;
+  private PImage button_sprite;
+  private int button_x_loc;
+  private int button_y_loc;
+  private int button_x;
+  private int button_y;
   public Button(Scene ptr,int x, int y, int w, int h){
     this(ptr,new Hitbox(new PVector(x,y),new PVector(w,h)));
   }
@@ -15,6 +20,15 @@ public class Button extends GameObject{
     tags.add(tag.UI);
     tags.add(tag.BUTTON);
   }
+  
+  void setButtonSprite(String img_name, int x_loc, int y_loc, int x_size, int y_size){
+    button_sprite = loadImage(img_name);
+    button_x_loc = x_loc;
+    button_y_loc = y_loc;
+    button_x = x_size;
+    button_y = y_size;
+  }
+  
   int update(){
     int status = 0;
     isHover = box.isHit(new PVector(mouseX,mouseY));
@@ -28,7 +42,12 @@ public class Button extends GameObject{
   boolean getHover(){return isHover=box.isHit(new PVector(mouseX,mouseY));}
   int action(){return 0;}
   void render(){
-    rect(box.TR.x,box.TR.y,box.Dimensions.x,box.Dimensions.y);
+    if(button_sprite != null) {
+      image(button_sprite,button_x_loc,button_y_loc,button_x,button_y);
+    }
+    else{
+      rect(box.TR.x,box.TR.y,box.Dimensions.x,box.Dimensions.y);
+    }
   }
 }
 //transition button
