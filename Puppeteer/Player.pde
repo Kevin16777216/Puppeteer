@@ -10,6 +10,9 @@ public class Entity extends GameObject implements Physical{
   protected Hitbox dummyBox;
   protected Level_Loader run;
   protected PImage sprite;
+  int savedTime;
+  int totalTime = 60000;
+  String timeString = "";
   public Entity(Level_Loader sc,Hitbox box,int health){
     super(sc);
     this.run =sc;
@@ -19,6 +22,8 @@ public class Entity extends GameObject implements Physical{
     healthBar = new Bar(sc, this.box.TR, new PVector(64,10), health);
     maxVelocity = 3;
     sprite = loadImage("Assets/player.png");
+    totalTime = 6000;
+    savedTime = millis();
   }
   public Hitbox getHitbox(){
     return box;
@@ -81,10 +86,12 @@ public class Player extends Entity{
   int update(){
     applyInput();
     super.update();
-    
+    int passedTime = millis() - savedTime;
+    int timeLeft = totalTime - passedTime;
+    println("Time Remaining: " + timeLeft/1000 + " seconds");
     if(checkLava())return 1;
     if(checkExit())return 3;
-    if(run.timer<0)return 2;
+    if(timeLeft/1000 <= 0)return 2;
     return 0;
   }
   void render(){
