@@ -6,6 +6,9 @@ public class Level_Editor extends Level_Loader{
     addObj(NextButton);
   }
   public boolean modifyTile(int x, int y, int id){
+    if(id ==1){
+      tiles[x][y]= new Wall(this, y*32,x*32,id);
+    }
     tiles[x][y].setID(id);
     return true;
   }
@@ -24,8 +27,22 @@ public class Level_Editor extends Level_Loader{
 public class Level_Runner extends Level_Loader{
   public Level_Runner(String s, readMode mode){
     super(s,mode);
-    //Hitbox box = new Hitbox(new PVector)
-    //Player mainPlayer = new Player(this);
+    Hitbox box = new Hitbox(new PVector(320,320),new PVector(30,30));
+    Player mainPlayer = new Player(this,box,100);
+    addObj(mainPlayer);
   }
-
+    int handleStatus(int status){
+    switch(status){
+      case 0:
+        //addObj(tile)
+      case 1://Dead
+        return 2;
+      case 2://Out of time
+        return 2;
+      case 3://Success
+        return 4;
+      default:
+        return status;
+    }
+  }
 }

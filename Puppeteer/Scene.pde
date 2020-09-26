@@ -63,6 +63,10 @@ abstract class Scene {
     }
     return out;
   }
+  public HashSet<GameObject> getObj(tag tags){
+    if(!objectMap.containsKey(tags))return null;
+    return objectMap.get(tags);
+  }
   public void addObj(GameObject obj) {
     tbc.add(obj);
   }

@@ -1,3 +1,6 @@
+interface Physical{
+  public Hitbox getHitbox();
+}
 public class Hitbox{
   //Coordinate(Top Right);
   PVector TR;
@@ -21,5 +24,11 @@ public class Hitbox{
   }
   public boolean isHit(PVector other){
     return other.x>=TR.x && other.y>=TR.y && other.x<=TR.x+Dimensions.x && other.y<=TR.y+Dimensions.y;
+  }
+  public void translate(PVector diff){
+    this.TR.add(diff);
+  }
+  void render(){
+    rect(TR.x,TR.y,Dimensions.x,Dimensions.y);
   }
 }

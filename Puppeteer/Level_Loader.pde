@@ -19,7 +19,13 @@ public class Level_Loader extends Scene{
       for(int y = 0; y < tile_data[x].length; y++) {
         //The reason why it's inputted as y,x is because x represents the # of rows while y represents the # of columns.
         //Increasing Rows --> Vertical Displacement, Increasing Columns --> Horizontal Displacement.
-        Tile tmp = new Tile(this, y*32,x*32,(int)tile_data[x][y]);
+        int id =(int)tile_data[x][y];
+        Tile tmp;
+        if(id == 1){
+          tmp = new Wall(this, y*32,x*32,id);
+        }else{
+          tmp = new Tile(this, y*32,x*32,id);
+        }
         tiles[x][y] = tmp;
         addObj(tmp);
       }
@@ -81,27 +87,23 @@ public class Level_Loader extends Scene{
          color c = get(y,x);
          int red_col = (int)red(c);
          switch(red_col) {
-           //White or Nothing
-           case 255:
-             ret_string += "0";
-             break;
            //Brown
            case 185:
-             ret_string += "1";
+             ret_string += "0";
              break;
            //Black Wall
            case 0:
-             ret_string += "2";
+             ret_string += "1";
              break;
            case 237:
-             ret_string += "3";
+             ret_string += "2";
              break;
            //Dark Blue
            case 63:
-             ret_string += "4";
+             ret_string += "3";
              break;
            case 34:
-             ret_string += "5";
+             ret_string += "4";
              break; 
          }
          if(y != 59) {
