@@ -42,8 +42,8 @@ public class GameHandler {
       case 7:
         return new Defeat();
       case 8:
-      String viewData = cScene.Meta;
-        return new Viewing(viewData, readMode.STRING);
+        String viewData = cScene.Meta;
+        /*return new Viewing(viewData, readMode.STRING);*/
     }
     return new DemoScene();
   }

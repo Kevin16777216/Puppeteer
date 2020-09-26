@@ -11,7 +11,7 @@ public class Level_Loader extends Scene{
     if(mode == readMode.IMG){
       s =imageToString(s);
     }
-    clearLevel();
+    //clearLevel();
     //Example String: "[[1,3,2,3,4,3],[1,2,3,4,3,2,1]]:[4,3]:[[0,4,3],[1,6,3]]"
     //The last value of the monster 2D array is the type/id.
     //Splits the string into a 2D Array of Strings. (First is for Tiles, The Rest are for Enemies)

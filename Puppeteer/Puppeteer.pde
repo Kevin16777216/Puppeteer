@@ -15,11 +15,14 @@ void setup() {
 
 void draw() {
   double current = millis();
-  println((int)(1000/(current-previous)));
+  //println((int)(1000/(current-previous)));
   previous = current;
   handle.update();
   handle.render();
   keys.update();
+  if(n != null){
+    println(n.getPlayerType());
+  }
 }
 
 public void keyPressed() {
