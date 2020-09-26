@@ -12,7 +12,7 @@ public class Networking extends PApplet {
       player_type = "puppeteer";
     }
     else if(type.equals("client")) {
-      c = new Client(this, "192.168.2.158",12345);
+      c = new Client(this, "192.168.1.152",12345);
       player_type = "puppet";
     }
     this.type = type;

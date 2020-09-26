@@ -15,13 +15,13 @@ void setup() {
 
 void draw() {
   long current = System.nanoTime();
-  println((int)(1E9/(current-previous)));
+  //println((int)(1E9/(current-previous)));
   previous = current;
   handle.update();
   handle.render();
   keys.update();
   if(n != null){
-    println(n.getPlayerType());
+    //println(n.getPlayerType());
   }
 }
 

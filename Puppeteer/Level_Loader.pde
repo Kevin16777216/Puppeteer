@@ -7,6 +7,7 @@ public class Level_Loader extends Scene{
   int timer = 20;
   ArrayList<Enemy> enemies = new ArrayList<Enemy>();
   HashSet<Physical> solidcache;
+  AStar searcher;
   //HashSet<Physical> solidcache;
   //String s can either be the string data itself OR the image. 
   public Level_Loader(String s, readMode mode){
@@ -46,13 +47,16 @@ public class Level_Loader extends Scene{
          }
        }
     }
+    searcher = new AStar(tiles);
   }
   int update(){
     int out = super.update();
     solidcache.clear();
     HashSet<GameObject> tmp=getObj(tag.SOLID);
-    for(GameObject i:tmp){
-      solidcache.add((Physical)i);
+    if(tmp != null){
+      for(GameObject i:tmp){
+        solidcache.add((Physical)i);
+      }
     }
     return out;
     
