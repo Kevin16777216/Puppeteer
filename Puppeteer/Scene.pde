@@ -52,11 +52,13 @@ abstract class Scene {
       } 
     }
     
-    //Goes to GameHandler for case 2. Changes!
-    String networkData = n.getData();
-    if(!networkData.equals("No data read!")){
-      Meta = networkData;
-      return 2;
+    //Goes to GameHandler for case 1. Changes!
+    if(n != null) {
+      String networkData = n.getData();
+      if(!networkData.equals("No data read!")){
+        Meta = networkData;
+        return 1;
+      }
     }
     return status;
   }

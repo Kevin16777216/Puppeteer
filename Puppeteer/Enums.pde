@@ -7,6 +7,7 @@ public static enum tag{
   PALETTE,
   BUTTON,
   ENTITY,
+  SCN,
   DEFAULT
 }
 public static enum readMode{
