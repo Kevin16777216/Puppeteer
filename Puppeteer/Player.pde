@@ -51,6 +51,8 @@ public class Entity extends GameObject implements Physical{
     checkForCollision();
     if(velocity.mag() > .1){
       run.refreshNeighbor((int)(box.TR.x-box.TR.x%32)/32,(int)(box.TR.y-box.TR.y%32)/32);
+    }else{
+      run.refreshTile((int)(box.TR.y-box.TR.y%32)/32,(int)(box.TR.x-box.TR.x%32)/32);
     }
     healthBar.pos =new PVector(box.TR.x-16,box.TR.y-16);
     return 0;

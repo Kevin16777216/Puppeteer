@@ -13,7 +13,6 @@ public class Level_Loader extends Scene{
     if(mode == readMode.IMG){
       s =imageToString(s);
     }
-    clearLevel();
     solidcache = new HashSet<Physical>();
     //Example String: "[[1,3,2,3,4,3],[1,2,3,4,3,2,1]]:[4,3]:[[0,4,3],[1,6,3]]"
     //The last value of the monster 2D array is the type/id.

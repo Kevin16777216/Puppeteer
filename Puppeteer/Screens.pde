@@ -84,6 +84,12 @@ public class WaitingScreen extends Scene {
   }
 }
 
+public class Viewing extends Level_Loader {
+  public Viewing(String s, readMode mode){
+    super(s,mode);
+  }
+}
+
 public class Defeat extends Scene {
   Screen s;
   public Defeat() {

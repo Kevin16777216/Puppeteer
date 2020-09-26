@@ -151,7 +151,10 @@ public class Level_Runner extends Level_Loader{
     int handleStatus(int status){
     switch(status){
       case 0:
-        //addObj(tile)
+        //Consistently have the puppet send data for the livestream.
+        if(n.player_type.equals("puppet")) {
+          n.sendData(sendData());
+        }
       case 1://Dead
         n.sendData("gameover");
         return 7;
@@ -160,8 +163,13 @@ public class Level_Runner extends Level_Loader{
         return 7;
       case 3://Success
         if(n.player_type.equals("puppeteer")) {
-          n.sendData(Meta);
-          return 4;
+          n.sendData(sendData());
+          return 8;
+        }
+        if(n.player_type.equals("puppet")) {
+          n.sendData("swap");
+          n.changePlayerType();
+          return 2;
         }
       default:
         return status;
