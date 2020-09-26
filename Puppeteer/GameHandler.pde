@@ -38,6 +38,10 @@ public class GameHandler {
         cScene.exit();
         loadScene(1);
         break;
+      case 2:
+        cScene.exit();
+        loadScene(1);
+        break;
       default:
         //clean up other garbage
         cScene.exit();

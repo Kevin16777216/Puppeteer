@@ -3,10 +3,13 @@ KeyListener keys = new KeyListener();
 double previous = millis();
 double lag = 0.0;
 HashMap<Integer,key> input = new HashMap<Integer,key>();
+Networking n;
+
 void setup() {
   size(1920,1080);
   frameRate(4000);
   handle = new GameHandler();
+  n = new Networking("client");
 }
 
 void draw() {
