@@ -47,7 +47,7 @@ public class Level_Loader extends Scene{
          }
        }
     }
-    searcher = new AStar(tiles);
+    //searcher = new AStar(tiles);
   }
   int update(){
     int out = super.update();
@@ -92,6 +92,17 @@ public class Level_Loader extends Scene{
     int h =Math.min(gy+3,30);
     
     for(int i =Math.max(gx-2,0);i<w;++i){
+      for(int j = r;j<h;++j){
+        tiles[j][i].needLoad = true;
+      }
+    }
+  }
+  public void refreshNeighbor(int gx, int gy,int leniency){
+    int w=Math.min(gx+leniency,60);
+    int r=Math.max(gy-leniency,0);
+    int h =Math.min(gy+leniency,30);
+    
+    for(int i =Math.max(gx-leniency,0);i<w;++i){
       for(int j = r;j<h;++j){
         tiles[j][i].needLoad = true;
       }

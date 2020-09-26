@@ -5,10 +5,11 @@ public class Entity extends GameObject implements Physical{
   protected float maxVelocity=2;
   protected boolean isActive;
   protected Hitbox box;
-  protected float ACCEL_CONSTANT = 0.07;
-  protected float DECCEL_CONSTANT = 0.935;
+  protected float ACCEL_CONSTANT = 0.1;
+  protected float DECCEL_CONSTANT = 0.945;
   protected Hitbox dummyBox;
   protected Level_Loader run;
+  protected PImage sprite;
   public Entity(Level_Loader sc,Hitbox box,int health){
     super(sc);
     this.run =sc;
@@ -17,6 +18,7 @@ public class Entity extends GameObject implements Physical{
     velocity = new PVector(0,0);
     healthBar = new Bar(sc, this.box.TR, new PVector(64,10), health);
     maxVelocity = 3;
+    sprite = loadImage("Assets/player.png");
   }
   public Hitbox getHitbox(){
     return box;
@@ -61,6 +63,7 @@ public class Entity extends GameObject implements Physical{
 public class Player extends Entity{
   public Player(Level_Runner sc,Hitbox box,int health){
     super(sc,box,health);
+    tags.add(tag.PLAYER);
   }
   private void applyInput(){
     if(keys.isHeld('d'))velocity.x+=ACCEL_CONSTANT;
@@ -72,6 +75,14 @@ public class Player extends Entity{
     HashSet<GameObject> lava = sc.getObj(tag.LAVA);
     return checkEnv(lava);
   }
+  private boolean checkWater(){
+    HashSet<GameObject> water = sc.getObj(tag.WATER);
+    return checkEnv(water);
+  }
+  private boolean checkBullet(){
+    HashSet<GameObject> bullet = sc.getObj(tag.BULLET);
+    return checkEnv(bullet);
+  }
   private boolean checkExit(){
     HashSet<GameObject> exit = sc.getObj(tag.EXIT);
     return checkEnv(exit);
@@ -79,7 +90,12 @@ public class Player extends Entity{
   int update(){
     applyInput();
     super.update();
-    
+    if(checkBullet()){
+      health -=1;
+      healthBar.updateValue(health);
+    }
+    if(checkWater())velocity.mult(DECCEL_CONSTANT*0.93);
+    if(health<1)return 1;
     if(checkLava())return 1;
     if(checkExit())return 3;
     if(run.timer<0)return 2;
@@ -87,6 +103,7 @@ public class Player extends Entity{
   }
   void render(){
     healthBar.render();
-    box.render();
+    //box.render();
+    image(sprite, box.getX() - 15, box.getY() - 20, box.getXSize()*2, box.getYSize()*2);
   }
 }

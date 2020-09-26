@@ -15,14 +15,21 @@ void setup() {
 
 void draw() {
   long current = System.nanoTime();
-  //println((int)(1E9/(current-previous)));
+  println("FPS: " +(int)(1E9/(current-previous)));
   previous = current;
   handle.update();
   handle.render();
   keys.update();
-  if(n != null){
-    //println(n.getPlayerType());
-  }
+//<<<<<<< HEAD
+//  if(n != null){
+//    //println(n.getPlayerType());
+//=======
+//  /*if(n != null){
+//    println(n.getPlayerType());
+//>>>>>>> 7f79068973cb464c7e23e24d3d87e03252287d9c
+//  }
+//  */
+//  //println(mouseX + "," + mouseY + "\n");
 }
 
 public void keyPressed() {

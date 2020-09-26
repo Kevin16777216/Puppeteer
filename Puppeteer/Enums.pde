@@ -9,6 +9,7 @@ public static enum tag{
   EXIT,
   PALETTE,
   BUTTON,
+  BULLET,
   ENTITY,
   SCN,
   DEFAULT
