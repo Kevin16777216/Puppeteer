@@ -22,7 +22,7 @@ public class Entity extends GameObject implements Physical{
     healthBar = new Bar(sc, this.box.TR, new PVector(64,10), health);
     maxVelocity = 3;
     sprite = loadImage("Assets/player.png");
-    totalTime = 6000;
+    totalTime = 60000;
     savedTime = millis();
   }
   public Hitbox getHitbox(){
