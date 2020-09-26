@@ -1,14 +1,16 @@
 public class Entity extends GameObject implements Physical{
   protected int health;
   protected PVector velocity;
-  protected float maxVelocity=3;
+  protected float maxVelocity=2;
   protected boolean isActive;
   protected Hitbox box;
-  protected float ACCEL_CONSTANT = 0.1;
+  protected float ACCEL_CONSTANT = 0.07;
   protected float DECCEL_CONSTANT = 0.935;
   protected Hitbox dummyBox;
+  protected Level_Runner run;
   public Entity(Level_Runner sc,Hitbox box,int health){
     super(sc);
+    this.run =sc;
     this.health = health;
     this.box = box;
     velocity = new PVector(0,0);
@@ -18,7 +20,12 @@ public class Entity extends GameObject implements Physical{
     return box;
   }
   protected boolean checkCol(HashSet<GameObject> Boxes){
+    if(checkBounds())return true;
     if(Boxes != null)for(GameObject i:Boxes)if(box.isHit(((Physical)i).getHitbox()))return true;
+    return false;
+  }
+  protected boolean checkBounds(){
+    if(box.TR.x<0 || box.TR.y<0||box.TR.y+box.Dimensions.y > 960 ||box.TR.x+box.Dimensions.x>1920)return true;
     return false;
   }
   protected void checkForCollision(){
@@ -55,6 +62,7 @@ public class Player extends Entity{
   int update(){
     applyInput();
     super.update();
+    run.refreshNeighbor((int)(box.TR.x-box.TR.x%32)/32, (int)(box.TR.y-box.TR.y%32)/32);
     return 0;
   }
   void render(){

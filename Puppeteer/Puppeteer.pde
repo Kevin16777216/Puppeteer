@@ -4,23 +4,22 @@ double previous = millis();
 double lag = 0.0;
 HashMap<Integer,key> input = new HashMap<Integer,key>();
 Networking n = null;
+ImageList ImageList;
 
 void setup() {
   size(1920,1080);
   frameRate(4000);
+  ImageList = new ImageList();
   handle = new GameHandler();
 }
 
 void draw() {
   double current = millis();
-  //println((int)(1000/(current-previous)));
+  println((int)(1000/(current-previous)));
   previous = current;
-  clear();
-  background(255);
   handle.update();
   handle.render();
   keys.update();
-  println("Mouse X:" + mouseX + " Mouse Y:" + mouseY);
 }
 
 public void keyPressed() {

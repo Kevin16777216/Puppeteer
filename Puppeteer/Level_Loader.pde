@@ -31,7 +31,20 @@ public class Level_Loader extends Scene{
       }
     }
   }
-    
+  public void refreshTile(int x, int y){
+    tiles[x][y].needLoad = true;
+  }
+  public void refreshNeighbor(int gx, int gy){
+    refreshTile(gy,gx);
+    refreshTile(gy,Math.min(gx+1,59));
+    refreshTile(gy,Math.max(gx-1,0));
+    refreshTile(Math.min(gy+1,29),Math.min(gx+1,59));
+    refreshTile(Math.min(gy+1,29),Math.max(gx-1,0));
+    refreshTile(Math.max(gy-1,0),Math.min(gx+1,59));
+    refreshTile(Math.max(gy-1,0),Math.max(gx-1,0));
+    refreshTile(Math.max(gy-1,0),gx);
+    refreshTile(Math.min(gy+1,29),gx);
+  }
   public float[][] toFloatArray(String data){
     String [] array = data.replaceAll("[\\[ ]+", "").split("],");
     float [][] floatArray = new float[array.length][];
