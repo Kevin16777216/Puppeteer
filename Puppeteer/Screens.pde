@@ -21,7 +21,7 @@ public class Main_Menu extends Scene {
     s = new Screen(this);
     s.chooseImage("Assets/mm.jpg");
     tButton puppeteer_button = new tButton(this,1074,318,482,174,2);
-    tButton puppet_button = new tButton(this,1071,592,537,201,1);
+    tButton puppet_button = new tButton(this,1071,592,537,201,5);
     tButton instructions_button = new tButton(this,1087,863,674,105,3);
     addObj(puppeteer_button);
     addObj(puppet_button);
@@ -50,6 +50,67 @@ public class Instructions extends Scene {
     addObj(back_button);
     addObj(s);
     
+  }
+  
+  int handleStatus(int status){
+    switch(status){
+      case 0:
+        //
+      case 1:
+        //
+      default:
+        return status;
+    }
+  }
+}
+
+public class WaitingScreen extends Scene {
+  Screen s;
+  public WaitingScreen() {
+    s = new Screen(this);
+    s.chooseImage("Assets/waiting.jpg");
+    addObj(s);
+  }
+  
+   int handleStatus(int status){
+    switch(status){
+      case 0:
+        //
+      case 1:
+        //
+      default:
+        return status;
+    }
+  }
+}
+
+public class Defeat extends Scene {
+  Screen s;
+  public Defeat() {
+    s = new Screen(this);
+    s.chooseImage("Assets/defeat.jpg");
+    addObj(s);
+    
+  }
+  
+  int handleStatus(int status){
+    switch(status){
+      case 0:
+        //
+      case 1:
+        //
+      default:
+        return status;
+    }
+  }
+}
+
+public class Victory extends Scene {
+  Screen s;
+  public Victory() {
+    s = new Screen(this);
+    s.chooseImage("Assets/victory.jpg");
+    addObj(s);
   }
   
   int handleStatus(int status){

@@ -20,7 +20,6 @@ void draw() {
   handle.update();
   handle.render();
   keys.update();
-  println("Mouse X:" + mouseX + " Mouse Y:" + mouseY);
 }
 
 public void keyPressed() {

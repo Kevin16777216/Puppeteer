@@ -4,13 +4,16 @@ public class Networking extends PApplet {
   Server s;
   Client c;
   String type;
+  String player_type;
   
   public Networking(String type) {
     if(type.equals("server")) {
       s = new Server(this, 12345);
+      player_type = "puppeteer";
     }
     else if(type.equals("client")) {
       c = new Client(this, "192.168.2.158",12345);
+      player_type = "puppet";
     }
     this.type = type;
   }
@@ -41,5 +44,18 @@ public class Networking extends PApplet {
       }
     }
     return "No data read!";
+ }
+ 
+ public String getPlayerType() {
+   return player_type;
+ }
+ 
+ public void changePlayerType() {
+   if(player_type.equals("puppeteer")){
+     player_type = "puppet";
+   }
+   else if(player_type.equals("puppet")){
+     player_type = "puppeteer";
+   }
  }
 }
