@@ -23,7 +23,7 @@ public class GameHandler {
       case 1:
         String lvlData = cScene.Meta;
         print(lvlData);
-        return new Level_Runner(lvlData,readMode.STRING,true);
+        return new Level_Runner(lvlData,readMode.STRING);
       //Main Menu
       case 2: 
         return new Main_Menu();
