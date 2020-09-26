@@ -5,6 +5,7 @@ double lag = 0.0;
 HashMap<Integer,key> input = new HashMap<Integer,key>();
 Networking n = null;
 ImageList ImageList;
+boolean is_puppeteer = true;
 
 void setup() {
   size(1920,1080);

@@ -100,13 +100,11 @@ public class Palette extends GameObject{
   }
 }
 public class Level_Runner extends Level_Loader{
-  boolean is_puppeteer;
-  public Level_Runner(String s, readMode mode, boolean is_puppeteer){
+  public Level_Runner(String s, readMode mode){
     super(s,mode);
     Hitbox box = new Hitbox(new PVector(320,320),new PVector(30,30));
     Player mainPlayer = new Player(this,box,100);
     addObj(mainPlayer);
-    this.is_puppeteer = is_puppeteer;
   }
     int handleStatus(int status){
     switch(status){
